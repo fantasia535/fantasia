@@ -19,10 +19,6 @@ void loop()
   {
     rbt_move(FWD,100);
   }
-  /*likely going towards the wall
-  * not sure how close so turn as fast
-  * as we can
-  */
   if(wright && wmid)
   {
     rbt_move(HARD_LEFT,100);
@@ -38,7 +34,7 @@ void loop()
     rbt_move(HARD_LEFT,100);
   }
 }
-/
+*/*
 /*robot interface*/
 typedef enum{
   LEFT,
@@ -48,7 +44,7 @@ typedef enum{
   BRAKE,
   HARD_LEFT,
 }direction_t;
-/
+*/*
 case HARD_LEFT:
    digitalWrite(BPHASE,MOTOR_FWD);
    digitalWrite(APHASE,MOTOR_FWD);
