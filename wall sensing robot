@@ -1,0 +1,57 @@
+#include "robot.h"
+
+void setup()
+{
+  Serial.begin(38400);
+  Serial.println("Boot");
+  rbt_init();  
+  delay(5000);
+  rbt_move(FWD,100);
+}
+
+uint16_t lleft,lmid,lright;
+boolean wleft,wmid,wright;
+uint16_t avoid_count=0;
+void loop()                     
+{
+  rbt_sns(&lleft,&lmid,&lright,&wleft,&wmid,&wright);
+  if(wright && !wmid)
+  {
+    rbt_move(FWD,100);
+  }
+  /*likely going towards the wall
+  * not sure how close so turn as fast
+  * as we can
+  */
+  if(wright && wmid)
+  {
+    rbt_move(HARD_LEFT,100);
+  }
+  /*going away from the wall
+  * slowly turn back towards the wall
+  */
+  if(!wright && !wmid)
+  {
+    rbt_move(RIGHT,130);
+  }
+  {
+    rbt_move(HARD_LEFT,100);
+  }
+}
+/
+/*robot interface*/
+typedef enum{
+  LEFT,
+  RIGHT,
+  FWD,
+  REV,
+  BRAKE,
+  HARD_LEFT,
+}direction_t;
+/
+case HARD_LEFT:
+   digitalWrite(BPHASE,MOTOR_FWD);
+   digitalWrite(APHASE,MOTOR_FWD);
+   analogWrite(AEN,speed);
+   analogWrite(BEN,0);
+   break;
